@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+    <title>Add Your Experience</title>
+    <style>
+        /* Custom styles for form animation and aesthetics */
+        .form-container {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        textarea:focus, input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+            border-color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Add Your Experience</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form action="/user/add-new" method="post" enctype="multipart/form-data" class="form-container">
+                    <div class="mb-3">
+                        <label for="coverImage" class="form-label">Cover Image</label>
+                        <input type="file" class="form-control" id="coverImage" name="coverImage" accept="image/*" aria-describedby="coverImageHelp">
+                        <div id="coverImageHelp" class="form-text">Upload a cover image for your blog (optional).</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter the title of your blog" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="body" class="form-label">Body</label>
+                        <textarea class="form-control" id="body" name="body" rows="5" placeholder="Write your blog content here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include('./partials/script') %>
+</body>
+
+</html>
