@@ -1,4 +1,7 @@
-require('dotenv').config()
+require('dotenv').config();
+
+const { DB_NAME } = require('./constants/Database');
+const connectDB = require('./db/index.js');
 
 const express = require('express');
 const path = require('path');
@@ -8,19 +11,27 @@ const userRoute = require('./routes/user');
 const blogRoute = require('./routes/blog');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+
 const { validateToken } = require('./service/authentication');
 const Blog = require('./models/Blog'); // Ensure the correct path to your Blog model
 
-mongoose.connect(process.env.MONGO_URL).then(() => {
-    console.log('mongodb connected successfully');
-});
-//'mongodb://localhost:27017/blogify' MONGDB URL localhost
 const PORT = process.env.PORT || 8001;
+
+connectDB()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Listening on Port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.log("MongoDB connection error", err);
+    });
+
 app.set('view engine', 'ejs');
 app.set('views', path.resolve('./views'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.resolve('./public')))
+app.use(express.static(path.resolve('./public')));
 
 function authMiddleware(req, res, next) {
     const token = req.cookies['token'];
@@ -38,7 +49,7 @@ function authMiddleware(req, res, next) {
 
 app.get('/', authMiddleware, async (req, res) => {
     try {
-        const blogs = await Blog.find().populate('createdBy'); // Fetch all blogs and populate the createdBy field
+        const blogs = await Blog.find().populate('createdBy');
         return res.render('homepage', { user: req.user, blogs });
     } catch (err) {
         console.error(err);
@@ -48,7 +59,3 @@ app.get('/', authMiddleware, async (req, res) => {
 
 app.use('/user', userRoute);
 app.use('/user', authMiddleware, blogRoute);
-
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-});
