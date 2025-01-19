@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const Blog = require('../models/Blog'); // Adjust the path if necessary
-const Comment = require('../models/Comment'); // Adjust the path if necessary
+const Blog = require('../models/Blog.js'); // Adjust the path if necessary
+const Comment = require('../models/Comment.js'); // Adjust the path if necessary
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({

@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const { validateToken } = require('./service/authentication');
-const Blog = require('./models/Blog'); // Ensure the correct path to your Blog model
+const Blog = require('./models/Blog.js'); // Ensure the correct path to your Blog model
 
 const PORT = process.env.PORT || 8080;
 

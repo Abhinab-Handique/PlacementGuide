@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const User = require('../models/User.js');
 //const { createTokenForUser, validateToken } = require('../service/authentication');
 
 const allowedEmailDomains= ['ei.nits.ac.in','ece.nits.ac.in'];
